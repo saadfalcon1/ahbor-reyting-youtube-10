@@ -31,12 +31,12 @@ export function BanksList({ data, onBankClick }: BanksListProps) {
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-slate-800">
-              <th className="text-left py-3 px-4 text-slate-400 font-semibold">Company</th>
+              <th className="text-left py-3 px-4 text-slate-400 font-semibold">Kanal nomi</th>
               <th className="text-left py-3 px-4 text-slate-400 font-semibold">Username</th>
-              <th className="text-right py-3 px-4 text-slate-400 font-semibold">Followers</th>
-              <th className="text-right py-3 px-4 text-slate-400 font-semibold">Avg Likes</th>
-              <th className="text-right py-3 px-4 text-slate-400 font-semibold">Engagement %</th>
-              <th className="text-center py-3 px-4 text-slate-400 font-semibold">Action</th>
+              <th className="text-right py-3 px-4 text-slate-400 font-semibold">Obunachilar soni</th>
+              <th className="text-right py-3 px-4 text-slate-400 font-semibold">Har bir post uchun o'rtacha like</th>
+              <th className="text-right py-3 px-4 text-slate-400 font-semibold">Faollik darajasi</th>
+              <th className="text-center py-3 px-4 text-slate-400 font-semibold">Batafsil ma'lumot</th>
             </tr>
           </thead>
           <tbody>

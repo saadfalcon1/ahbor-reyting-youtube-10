@@ -24,53 +24,53 @@ export function BankDetailsModal({ bank, onClose }: BankDetailsModalProps) {
         </CardHeader>
 
         <CardContent className="space-y-6">
-          {/* Social Metrics */}
+          {/* Ijtimoiy tarmoq ko‘rsatkichlari */}
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            <DetailMetric label="Subscribers" value={(bank.subscribers ?? 0).toLocaleString()} />
-            <DetailMetric label="Total Videos" value={(bank.total_videos ?? 0).toString()} />
-            <DetailMetric label="Total Views" value={(bank.total_views ?? 0).toLocaleString()} />
-            <DetailMetric label="Avg Views/Video" value={(bank.avg_views_per_video ?? 0).toLocaleString()} />
-            <DetailMetric label="Avg Likes/Video" value={(bank.avg_likes_per_video ?? 0).toFixed(1)} />
-            <DetailMetric label="Avg Posts/Month" value={(bank.avg_posts_per_month ?? 0).toString()} />
+            <DetailMetric label="Obunachilar soni" value={(bank.subscribers ?? 0).toLocaleString()} />
+            <DetailMetric label="Jami videolar" value={(bank.total_videos ?? 0).toString()} />
+            <DetailMetric label="Jami ko‘rishlar" value={(bank.total_views ?? 0).toLocaleString()} />
+            <DetailMetric label="Har bir video uchun o‘rtacha ko‘rishlar" value={(bank.avg_views_per_video ?? 0).toLocaleString()} />
+            <DetailMetric label="Har bir video uchun o‘rtacha layklar" value={(bank.avg_likes_per_video ?? 0).toFixed(1)} />
+            <DetailMetric label="Oyiga o‘rtacha postlar soni" value={(bank.avg_posts_per_month ?? 0).toString()} />
           </div>
 
-          {/* Engagement Analysis */}
+          {/* Jalb qilish tahlili */}
           <div className="border-t border-slate-800 pt-6">
-            <h3 className="text-lg font-semibold text-white mb-4">Engagement Analysis</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">Jalb qilish tahlili</h3>
             <div className="space-y-3">
-              <AnalysisRow label="Engagement Rate" value={`${(((bank.avg_likes_per_video ?? 0) / (bank.avg_views_per_video || 1)) * 100).toFixed(2)}%`} color="blue" />
-              <AnalysisRow label="Posts per Month" value={(bank.avg_posts_per_month ?? 0).toString()} color="green" />
-              <AnalysisRow label="Subscriber Scale" value={`${(((bank.subscribers ?? 0) / 1000).toFixed(1))}K`} color="purple" />
+              <AnalysisRow label="Jalb qilish darajasi" value={`${(((bank.avg_likes_per_video ?? 0) / (bank.avg_views_per_video || 1)) * 100).toFixed(2)}%`} color="blue" />
+              <AnalysisRow label="Oyiga postlar soni" value={(bank.avg_posts_per_month ?? 0).toString()} color="green" />
+              <AnalysisRow label="Obunachi hajmi" value={`${(((bank.subscribers ?? 0) / 1000).toFixed(1))}K`} color="purple" />
             </div>
           </div>
 
-          {/* Channel Info */}
+          {/* Kanal ma’lumotlari */}
           <div className="border-t border-slate-800 pt-6">
-            <h3 className="text-lg font-semibold text-white mb-4">Channel Information</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">Kanal ma’lumotlari</h3>
             <div className="space-y-2 text-sm">
-              <InfoRow label="Channel Created" value={bank.channel_created_date} />
-              <InfoRow label="Last Updated" value={bank.last_updated_date} />
-              <InfoRow label="Username" value={bank.username} />
+              <InfoRow label="Kanal yaratilgan sana" value={bank.channel_created_date} />
+              <InfoRow label="So‘nggi yangilanish" value={bank.last_updated_date} />
+              <InfoRow label="Foydalanuvchi nomi" value={bank.username} />
             </div>
           </div>
 
-          {/* Performance Indicators */}
+          {/* Faoliyat ko‘rsatkichlari */}
           <div className="border-t border-slate-800 pt-6">
-            <h3 className="text-lg font-semibold text-white mb-4">Performance Indicators</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">Faoliyat ko‘rsatkichlari</h3>
             <div className="space-y-3">
               <PerformanceBar
-                label="Engagement Quality"
+                label="Jalb qilish sifati"
                 value={Math.min(100, ((((bank.avg_likes_per_video ?? 0) / (bank.avg_views_per_video || 1)) * 100)))}
                 color="from-blue-500 to-cyan-500"
               />
               <PerformanceBar
-                label="Content Activity"
+                label="Kontent faolligi"
                 value={Math.min(100, ((bank.avg_posts_per_month ?? 0) / 30) * 100)}
                 color="from-green-500 to-emerald-500"
               />
               <PerformanceBar
-                label="Audience Reach"
-                value={Math.min(100, ((bank.subscribers ?? 0) / 20000) * 100)}
+                label="Auditoriya qamrovi"
+                value={Math.min(100, ((bank.subscribers ?? 0) / 2000) * 100)}
                 color="from-purple-500 to-pink-500"
               />
             </div>
