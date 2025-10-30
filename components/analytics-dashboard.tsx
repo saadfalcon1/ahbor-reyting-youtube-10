@@ -49,10 +49,10 @@ export function AnalyticsDashboard({ onBankClick }: AnalyticsDashboardProps) {
               alt="YouTube"
               className="h-8 w-8"
             />
-            YouTube kanallari statistikasi
+            Sug‘urta kompaniyalarining youtubedagi faoliyati va ko‘rsatkichlari
           </h1>
           <p className="text-slate-400">
-            O‘zbekiston sug‘urta kompaniyalarining ijtimoiy tarmoq statistikasi
+            Yangilangan sana: 30-oktabr 2025-yil
           </p>
         </div>
         {/* Key Metrics */}
@@ -83,7 +83,7 @@ export function AnalyticsDashboard({ onBankClick }: AnalyticsDashboardProps) {
           <Card className="bg-slate-900/50 border-slate-800">
             <CardHeader>
               <CardTitle className="text-white">Jalb qilish ko‘rsatkichlari</CardTitle>
-              <CardDescription>Har bir post uchun o‘rtacha layklar va izohlar soni</CardDescription>
+              <CardDescription>Har bir nashr uchun o‘rtacha layklar</CardDescription>
             </CardHeader>
             <CardContent>
               <EngagementChart data={insuranceData} onBankClick={onBankClick} />
@@ -92,8 +92,8 @@ export function AnalyticsDashboard({ onBankClick }: AnalyticsDashboardProps) {
 
           <Card className="bg-slate-900/50 border-slate-800">
             <CardHeader>
-              <CardTitle className="text-white">Post joylash chastotasi</CardTitle>
-              <CardDescription>Har bir kompaniyaning oylik o‘rtacha post soni</CardDescription>
+              <CardTitle className="text-white">O'rtacha postlar soni</CardTitle>
+              <CardDescription>Har bir kompaniya 1 oyda nechta nashr joylaydi</CardDescription>
             </CardHeader>
             <CardContent>
               <PostingFrequencyChart data={insuranceData} onBankClick={onBankClick} />
