@@ -56,7 +56,7 @@ export function BankDetailsModal({ bank, onClose }: BankDetailsModalProps) {
 
           {/* Faoliyat ko‘rsatkichlari */}
           <div className="border-t border-slate-800 pt-6">
-            <h3 className="text-lg font-semibold text-white mb-4">Faoliyat ko‘rsatkichlari</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">Kanal faoliyati ko‘rsatkichlari</h3>
             <div className="space-y-3">
               <PerformanceBar
                 label="Jalb qilish darajasi"
