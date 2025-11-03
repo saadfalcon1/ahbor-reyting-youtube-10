@@ -47,7 +47,7 @@ export function AnalyticsDashboard({ onBankClick }: AnalyticsDashboardProps) {
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png"
               alt="YouTube"
-              className="h-8 w-8"
+              className="h-20 w-auto"
             />
             Sug‘urta kompaniyalarining youtubedagi faoliyati va ko‘rsatkichlari
           </h1>
