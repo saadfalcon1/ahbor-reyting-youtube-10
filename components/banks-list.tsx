@@ -67,7 +67,7 @@ export function BanksList({ data, onBankClick }: BanksListProps) {
   return (
     <div className="space-y-4">
       <Input
-        placeholder="Bank nomi yoki foydalanuvchi nomi orqali qidirish..."
+        placeholder="Kompaniya nomi yoki foydalanuvchi nomi orqali qidirish..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-500"
