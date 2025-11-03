@@ -67,7 +67,7 @@ export function BanksList({ data, onBankClick }: BanksListProps) {
   return (
     <div className="space-y-4">
       <Input
-        placeholder="Search by company name or username..."
+        placeholder="Bank nomi yoki foydalanuvchi nomi orqali qidirish..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-500"
@@ -83,7 +83,7 @@ export function BanksList({ data, onBankClick }: BanksListProps) {
               >
                 Kanal nomi {sortKey === "company_name" && (sortOrder === "asc" ? "▲" : "▼")}
               </th>
-              <th className="text-left py-3 px-4 text-slate-400 font-semibold">Username</th>
+              <th className="text-left py-3 px-4 text-slate-400 font-semibold">Foydalanuvchi nomi</th>
               <th
                 onClick={() => handleSort("subscribers")}
                 className="text-right py-3 px-4 text-slate-400 font-semibold cursor-pointer hover:text-white"
@@ -123,7 +123,7 @@ export function BanksList({ data, onBankClick }: BanksListProps) {
                   </span>
                 </td>
                 <td className="py-3 px-4 text-center">
-                  <button className="text-blue-400 hover:text-blue-300 font-medium text-xs">View</button>
+                  <button className="text-blue-400 hover:text-blue-300 font-medium text-xs">Ko'rish</button>
                 </td>
               </tr>
             ))}

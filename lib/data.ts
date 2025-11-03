@@ -195,7 +195,7 @@ export const insuranceData = [
     last_updated_date: "10/31/2025",
   },
   {
-    company_name: "AL'SKOM SUG'URTA KOMPANIYASI",
+    company_name: "ALSKOM SUG'URTA KOMPANIYASI",
     username: "@alskom5348",
     subscribers: 5,
     total_videos: 3,
