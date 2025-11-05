@@ -22,17 +22,14 @@ export function AnalyticsDashboard({ onBankClick }: AnalyticsDashboardProps) {
       const likes = b.avg_likes_per_video ?? 0
       return views > 0 ? (likes / views) * 100 : 0
     })
-    const avgEngagementRate = (
-      engagementRates.reduce((a, b) => a + b, 0) / (engagementRates.length || 1)
-    ).toFixed(2)
+    const avgEngagementRate = (engagementRates.reduce((a, b) => a + b, 0) / (engagementRates.length || 1)).toFixed(2)
 
     const avgLikes = (
-      insuranceData.reduce((sum, bank) => sum + (bank.avg_likes_per_video ?? 0), 0) /
-      (insuranceData.length || 1)
+      insuranceData.reduce((sum, bank) => sum + (bank.avg_likes_per_video ?? 0), 0) / (insuranceData.length || 1)
     ).toFixed(1)
 
     const topBank = insuranceData.reduce((prev, current) =>
-      (current.subscribers ?? 0) > (prev.subscribers ?? 0) ? current : prev
+      (current.subscribers ?? 0) > (prev.subscribers ?? 0) ? current : prev,
     )
 
     return { totalFollowers, avgEngagementRate, avgLikes, topBank }
@@ -44,24 +41,25 @@ export function AnalyticsDashboard({ onBankClick }: AnalyticsDashboardProps) {
         {/* Header */}
         <div className="mb-8">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-3 flex-1 min-w-0">
+            <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png"
                 alt="YouTube"
                 className="h-10 md:h-12 w-auto shrink-0"
               />
-              <div className="min-w-0">
-                <h1 className="text-3xl md:text-4xl font-bold text-white mb-1 break-words">
-                  Sug‘urta kompaniyalarining YouTubedagi faoliyati va ko‘rsatkichlari
+              <div className="min-w-0 flex-1">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-1 break-words">
+                  Sug'urta kompaniyalarining YouTubedagi faoliyati va ko'rsatkichlari
                 </h1>
-                <p className="text-slate-400">Yangilangan sana: 31-oktabr 2025-yil</p>
+                <p className="text-slate-400 text-sm">Yangilangan sana: 31-oktabr 2025-yil</p>
               </div>
+              <img src="/Ahborlogo.png" alt="Ahbor logo" className="h-8 sm:hidden w-auto object-contain shrink-0" />
             </div>
 
             <img
               src="/Ahborlogo.png"
               alt="Ahbor logo"
-              className="h-16 md:h-20 w-auto object-contain max-w-[160px] shrink-0 self-start sm:self-auto"
+              className="hidden sm:block h-16 md:h-20 w-auto object-contain max-w-[160px] shrink-0"
             />
           </div>
         </div>
@@ -69,8 +67,8 @@ export function AnalyticsDashboard({ onBankClick }: AnalyticsDashboardProps) {
         {/* Key Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <MetricCard label="Jami obunachilar" value={stats.totalFollowers.toLocaleString()} icon="👥" />
-          <MetricCard label="O‘rtacha jalb qilish darajasi" value={`${stats.avgEngagementRate}%`} icon="📊" />
-          <MetricCard label="Har bir nashrga o‘rtacha yoqtirishlar soni" value={stats.avgLikes} icon="❤️" />
+          <MetricCard label="O'rtacha jalb qilish darajasi" value={`${stats.avgEngagementRate}%`} icon="📊" />
+          <MetricCard label="Har bir nashrga o'rtacha yoqtirishlar soni" value={stats.avgLikes} icon="❤️" />
           <MetricCard
             label="Eng faol sug'urta kompaniyasi"
             value={stats.topBank.company_name}
@@ -83,8 +81,8 @@ export function AnalyticsDashboard({ onBankClick }: AnalyticsDashboardProps) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           <Card className="bg-slate-900/50 border-slate-800">
             <CardHeader>
-              <CardTitle className="text-white">Eng ko‘p obunachilarga ega top-10 sug'urta kompaniyalari</CardTitle>
-              <CardDescription>YouTubeda eng katta auditoriyaga ega sug‘urta kompaniyalari</CardDescription>
+              <CardTitle className="text-white">Eng ko'p obunachilarga ega top-10 sug'urta kompaniyalari</CardTitle>
+              <CardDescription>YouTubeda eng katta auditoriyaga ega sug'urta kompaniyalari</CardDescription>
             </CardHeader>
             <CardContent>
               <FollowersChart data={insuranceData} onBankClick={onBankClick} />
@@ -93,8 +91,8 @@ export function AnalyticsDashboard({ onBankClick }: AnalyticsDashboardProps) {
 
           <Card className="bg-slate-900/50 border-slate-800">
             <CardHeader>
-              <CardTitle className="text-white">O‘rtacha yoqtirishlar soni</CardTitle>
-              <CardDescription>Har bir nashr uchun o‘rtacha yoqtirishlar soni</CardDescription>
+              <CardTitle className="text-white">O'rtacha yoqtirishlar soni</CardTitle>
+              <CardDescription>Har bir nashr uchun o'rtacha yoqtirishlar soni</CardDescription>
             </CardHeader>
             <CardContent>
               <EngagementChart data={insuranceData} onBankClick={onBankClick} />
