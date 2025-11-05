@@ -60,7 +60,7 @@ export function BankDetailsModal({ bank, onClose }: BankDetailsModalProps) {
             <div className="space-y-3">
               <PerformanceBar
                 label="Jalb qilish darajasi"
-                value={Math.min(100, ((((bank.avg_likes_per_video ?? 0) / (bank.avg_views_per_video || 10)) * 100)))}
+                value={Math.min(100, ((((bank.avg_likes_per_video ?? 0) / (bank.avg_views_per_video || 1)) * 1000)))}
                 color="from-blue-500 to-cyan-500"
               />
               <PerformanceBar
