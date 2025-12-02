@@ -39,7 +39,7 @@ export function BankDetailsModal({ bank, onClose }: BankDetailsModalProps) {
             <h3 className="text-lg font-semibold text-white mb-4">Faollik tahlili</h3>
             <div className="space-y-3">
               <AnalysisRow label="Jalb qilish darajasi" value={`${(((bank.avg_likes_per_video ?? 0) / (bank.avg_views_per_video || 1)) * 100).toFixed(2)}%`} color="blue" />
-              <AnalysisRow label="Oyiga o'rtacha nashrlar soni" value={(bank.avg_posts_per_month ?? 0).toString()} color="green" />
+              <AnalysisRow label="O‘rtacha oylik nashrlar soni" value={(bank.avg_posts_per_month ?? 0).toString()} color="green" />
               <AnalysisRow label="Obunachilar soni" value={`${(((bank.subscribers ?? 0) / 1000).toFixed(1))}K`} color="purple" />
             </div>
           </div>
