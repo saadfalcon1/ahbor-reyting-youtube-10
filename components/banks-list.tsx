@@ -81,7 +81,7 @@ export function BanksList({ data, onBankClick }: BanksListProps) {
                 onClick={() => handleSort("company_name")}
                 className="text-left py-3 px-4 text-slate-400 font-semibold cursor-pointer hover:text-white"
               >
-                Kanal nomi {sortKey === "company_name" && (sortOrder === "asc" ? "▲" : "▼")}
+                Sug'urta nomi {sortKey === "company_name" && (sortOrder === "asc" ? "▲" : "▼")}
               </th>
               <th className="text-left py-3 px-4 text-slate-400 font-semibold">Foydalanuvchi nomi</th>
               <th
