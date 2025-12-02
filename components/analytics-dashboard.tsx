@@ -102,7 +102,7 @@ export function AnalyticsDashboard({ onBankClick }: AnalyticsDashboardProps) {
           <Card className="bg-slate-900/50 border-slate-800">
             <CardHeader>
               <CardTitle className="text-white">O'rtacha nashrlar soni</CardTitle>
-              <CardDescription>Har bir sug'urta kompaniyasi bir oyda joylaydigan nashrlar soni</CardDescription>
+              <CardDescription>Har bir kompaniya tomonidan bir oyda joylashtirilgan nashrlar soni</CardDescription>
             </CardHeader>
             <CardContent>
               <PostingFrequencyChart data={insuranceData} onBankClick={onBankClick} />
