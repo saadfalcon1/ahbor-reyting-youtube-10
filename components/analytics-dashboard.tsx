@@ -51,7 +51,7 @@ export function AnalyticsDashboard({ onBankClick }: AnalyticsDashboardProps) {
                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-1 break-words">
                   Sug'urta kompaniyalarining YouTubedagi faoliyati va ko'rsatkichlari
                 </h1>
-                <p className="text-slate-400 text-sm">Yangilangan sana: 01-dekabr 2025-yil</p>
+                <p className="text-slate-400 text-sm">Yangilangan sana: 31-dekabr 2025-yil</p>
               </div>
               <img src="/Ahborlogo.png" alt="Ahbor logo" className="h-8 sm:hidden w-auto object-contain shrink-0" />
             </div>
