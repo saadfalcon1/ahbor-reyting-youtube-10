@@ -1,39 +1,102 @@
 "use client"
 
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { FollowersChart } from "./charts/followers-chart"
 import { EngagementChart } from "./charts/engagement-chart"
-// import { EngagementRateChart } from "./charts/engagement-rate-chart" // Not used, remove to keep clean
 import { PostingFrequencyChart } from "./charts/posting-frequency-chart"
 import { BanksList } from "./banks-list"
-import { insuranceData } from "@/lib/data"
+import { INSURANCE_BY_MONTH } from "@/lib/monthly-data"
 
-interface AnalyticsDashboardProps {
-  onBankClick: (bank: (typeof insuranceData)[0]) => void
+// Sug'urta kompaniyasi ma'lumotlari tipi
+export interface InsuranceCompany {
+  company_name: string
+  subscribers?: number
+  followers?: number
+  avg_views_per_video?: number
+  avg_likes_per_video?: number
+  avg_views_per_post?: number
+  avg_likes_per_post?: number
+  avg_likes?: number
 }
 
-export function AnalyticsDashboard({ onBankClick }: AnalyticsDashboardProps) {
-  const stats = useMemo(() => {
-    const totalFollowers = insuranceData.reduce((sum, bank) => sum + (bank.subscribers ?? 0), 0)
+type MonthKey = keyof typeof INSURANCE_BY_MONTH
+type MonthData = InsuranceCompany[]
 
-    const engagementRates = insuranceData.map((b) => {
-      const views = b.avg_views_per_video ?? 0
-      const likes = b.avg_likes_per_video ?? 0
+interface AnalyticsDashboardProps {
+  onBankClick: (company: InsuranceCompany) => void
+}
+
+const MONTHS: { key: MonthKey; label: string }[] = [
+  { key: "nov", label: "Noyabr" },
+  { key: "dec", label: "Dekabr" },
+  { key: "jan", label: "Yanvar" },
+]
+
+export function AnalyticsDashboard({ onBankClick }: AnalyticsDashboardProps) {
+  const [selectedMonth, setSelectedMonth] = useState<MonthKey>("jan")
+
+  const currentMonthData: MonthData = (INSURANCE_BY_MONTH[selectedMonth] ?? []) as MonthData
+
+  const stats = useMemo(() => {
+    if (!currentMonthData.length) {
+      return {
+        totalFollowers: 0,
+        avgEngagementRate: "0.00",
+        avgLikes: "0.0",
+        topCompany: null as InsuranceCompany | null,
+        followersDiff: 0,
+      }
+    }
+
+    const totalFollowers = currentMonthData.reduce((sum, company) => {
+      const subs = company.subscribers ?? company.followers ?? 0
+      return sum + subs
+    }, 0)
+
+    const engagementRates = currentMonthData.map((c) => {
+      const views = c.avg_views_per_video ?? c.avg_views_per_post ?? 0
+      const likes = c.avg_likes_per_video ?? c.avg_likes_per_post ?? 0
       return views > 0 ? (likes / views) * 100 : 0
     })
-    const avgEngagementRate = (engagementRates.reduce((a, b) => a + b, 0) / (engagementRates.length || 1)).toFixed(2)
+
+    const avgEngagementRate = (
+      engagementRates.reduce((a, b) => a + b, 0) / (engagementRates.length || 1)
+    ).toFixed(2)
 
     const avgLikes = (
-      insuranceData.reduce((sum, bank) => sum + (bank.avg_likes_per_video ?? 0), 0) / (insuranceData.length || 1)
+      currentMonthData.reduce(
+        (sum, company) => sum + (company.avg_likes_per_video ?? company.avg_likes_per_post ?? company.avg_likes ?? 0),
+        0,
+      ) / (currentMonthData.length || 1)
     ).toFixed(1)
 
-    const topBank = insuranceData.reduce((prev, current) =>
-      (current.subscribers ?? 0) > (prev.subscribers ?? 0) ? current : prev,
-    )
+    const topCompany = currentMonthData.reduce((prev, current) => {
+      const prevSubs = prev.subscribers ?? prev.followers ?? 0
+      const currSubs = current.subscribers ?? current.followers ?? 0
+      return currSubs > prevSubs ? current : prev
+    })
 
-    return { totalFollowers, avgEngagementRate, avgLikes, topBank }
-  }, [])
+    let followersDiff = 0
+
+    if (selectedMonth === "dec") {
+      const novData = (INSURANCE_BY_MONTH["nov"] ?? []) as MonthData
+      const novTotalFollowers = novData.reduce((sum, company) => {
+        const subs = company.subscribers ?? company.followers ?? 0
+        return sum + subs
+      }, 0)
+      followersDiff = totalFollowers - novTotalFollowers
+    } else if (selectedMonth === "jan") {
+      const decData = (INSURANCE_BY_MONTH["dec"] ?? []) as MonthData
+      const decTotalFollowers = decData.reduce((sum, company) => {
+        const subs = company.subscribers ?? company.followers ?? 0
+        return sum + subs
+      }, 0)
+      followersDiff = totalFollowers - decTotalFollowers
+    }
+
+    return { totalFollowers, avgEngagementRate, avgLikes, topCompany, followersDiff }
+  }, [currentMonthData, selectedMonth])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-6 md:p-8">
@@ -64,18 +127,50 @@ export function AnalyticsDashboard({ onBankClick }: AnalyticsDashboardProps) {
           </div>
         </div>
 
-        {/* Key Metrics */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <MetricCard label="Jami obunachilar" value={stats.totalFollowers.toLocaleString()} icon="👥" />
-          <MetricCard label="O'rtacha jalb qilish darajasi" value={`${stats.avgEngagementRate}%`} icon="📊" />
-          <MetricCard label="Har bir nashr uchun o'rtacha yoqtirishlar soni" value={stats.avgLikes} icon="❤️" />
-          <MetricCard
-            label="Eng ko'p obunachilarga ega sug'urta kompaniyasi"
-            value={stats.topBank.company_name}
-            icon="🏆"
-            subtitle={`${(stats.topBank.subscribers ?? 0).toLocaleString()} obunachi`}
-          />
+        {/* Oy filteri */}
+        <div className="flex gap-2 mb-6">
+          {MONTHS.map((month) => (
+            <button
+              key={month.key}
+              onClick={() => setSelectedMonth(month.key)}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition
+                ${
+                  selectedMonth === month.key
+                    ? "bg-red-600 text-white"
+                    : "bg-slate-800 text-slate-300 hover:bg-slate-700"
+                }`}
+            >
+              {month.label}
+            </button>
+          ))}
         </div>
+
+        {/* Key Metrics */}
+        {stats.topCompany && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <MetricCard
+              label="Jami obunachilar"
+              value={stats.totalFollowers.toLocaleString()}
+              icon="👥"
+            />
+            <MetricCard
+              label="Obunachilar o'sishi (oy bo'yicha)"
+              value={stats.followersDiff.toLocaleString()}
+              icon="📊"
+            />
+            <MetricCard
+              label="Har bir nashr uchun o'rtacha yoqtirishlar soni"
+              value={stats.avgLikes}
+              icon="❤️"
+            />
+            <MetricCard
+              label="Eng ko'p obunachilarga ega sug'urta kompaniyasi"
+              value={stats.topCompany.company_name}
+              icon="🏆"
+              subtitle={`${(stats.topCompany.subscribers ?? stats.topCompany.followers ?? 0).toLocaleString()} obunachi`}
+            />
+          </div>
+        )}
 
         {/* Charts Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
@@ -85,7 +180,7 @@ export function AnalyticsDashboard({ onBankClick }: AnalyticsDashboardProps) {
               <CardDescription>YouTubeda eng katta auditoriyaga ega sug'urta kompaniyalari</CardDescription>
             </CardHeader>
             <CardContent>
-              <FollowersChart data={insuranceData} onBankClick={onBankClick} />
+              <FollowersChart data={currentMonthData} onBankClick={onBankClick} />
             </CardContent>
           </Card>
 
@@ -95,7 +190,7 @@ export function AnalyticsDashboard({ onBankClick }: AnalyticsDashboardProps) {
               <CardDescription>Har bir nashr uchun o'rtacha yoqtirishlar soni</CardDescription>
             </CardHeader>
             <CardContent>
-              <EngagementChart data={insuranceData} onBankClick={onBankClick} />
+              <EngagementChart data={currentMonthData} onBankClick={onBankClick} />
             </CardContent>
           </Card>
 
@@ -105,19 +200,19 @@ export function AnalyticsDashboard({ onBankClick }: AnalyticsDashboardProps) {
               <CardDescription>Har bir kompaniya tomonidan bir oyda joylashtirilgan nashrlar soni</CardDescription>
             </CardHeader>
             <CardContent>
-              <PostingFrequencyChart data={insuranceData} onBankClick={onBankClick} />
+              <PostingFrequencyChart data={currentMonthData} onBankClick={onBankClick} />
             </CardContent>
           </Card>
         </div>
 
-        {/* Banks List */}
+        {/* Insurance Companies List */}
         <Card className="bg-slate-900/50 border-slate-800">
           <CardHeader>
             <CardTitle className="text-white">Barcha sug'urta kanallari</CardTitle>
             <CardDescription>Kanal ma'lumotlari ro'yxat ko'rinishida</CardDescription>
           </CardHeader>
           <CardContent>
-            <BanksList data={insuranceData} onBankClick={onBankClick} />
+            <BanksList data={currentMonthData} onBankClick={onBankClick} />
           </CardContent>
         </Card>
       </div>
