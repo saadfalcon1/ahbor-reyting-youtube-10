@@ -26,10 +26,10 @@ export function BankDetailsModal({ bank, onClose }: BankDetailsModalProps) {
         <CardContent className="space-y-6">
           {/* Ijtimoiy tarmoq ko‘rsatkichlari */}
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            <DetailMetric label="Obunachilar soni" value={(bank.subscribers ?? 0).toLocaleString()} />
-            <DetailMetric label="Jami videolar" value={(bank.total_videos ?? 0).toString()} />
-            <DetailMetric label="Jami ko‘rishlar" value={(bank.total_views ?? 0).toLocaleString()} />
-            <DetailMetric label="Har bir video uchun o‘rtacha ko‘rishlar soni" value={(bank.avg_views_per_video ?? 0).toLocaleString()} />
+            <DetailMetric label="Obunachilar soni" value={(bank.subscribers ?? 0).toString()} />
+            <DetailMetric label="Jami videolar soni" value={(bank.total_videos ?? 0).toString()} />
+            <DetailMetric label="Jami ko‘rishlar soni" value={(bank.total_views ?? 0).toString()} />
+            <DetailMetric label="Har bir video uchun o‘rtacha ko‘rishlar soni" value={(bank.avg_views_per_video ?? 0).toString()} />
             <DetailMetric label="Har bir video uchun o‘rtacha yoqtirishlar soni" value={(bank.avg_likes_per_video ?? 0).toFixed(1)} />
             <DetailMetric label="O‘rtacha ko'rishlar soni (Oylik)" value={(bank.avg_views_per_month ?? 0).toString()} />
           </div>
