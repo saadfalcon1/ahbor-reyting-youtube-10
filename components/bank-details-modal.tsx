@@ -31,7 +31,7 @@ export function BankDetailsModal({ bank, onClose }: BankDetailsModalProps) {
             <DetailMetric label="Jami ko‘rishlar" value={(bank.total_views ?? 0).toLocaleString()} />
             <DetailMetric label="Har bir video uchun o‘rtacha ko‘rishlar soni" value={(bank.avg_views_per_video ?? 0).toLocaleString()} />
             <DetailMetric label="Har bir video uchun o‘rtacha yoqtirishlar soni" value={(bank.avg_likes_per_video ?? 0).toFixed(1)} />
-            <DetailMetric label="Oyiga o‘rtacha ko'rishlar soni" value={(bank.avg_views_per_month ?? 0).toString()} />
+            <DetailMetric label="O‘rtacha ko'rishlar soni (Oylik)" value={(bank.avg_views_per_month ?? 0).toString()} />
           </div>
 
           {/* Jalb qilish tahlili */}
